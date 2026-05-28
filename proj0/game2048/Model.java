@@ -210,6 +210,7 @@ public class Model extends Observable {
         }
     }
 
+    /** Checks if n is a valid index for size. */
     private static boolean validIndex(int n, int size) {
         return n >= 0 && n < size;
     }
