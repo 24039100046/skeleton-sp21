@@ -155,8 +155,18 @@ public class Model extends Observable {
      * given a Tile object t, we get its value with t.value().
      */
     public static boolean maxTileExists(Board b) {
-        // TODO: Fill in this function.
-        return false;
+        boolean exist = false;
+        int size = b.size();
+        for (int col = 0; col < size; col++) {
+            for (int row = 0; row < size; row++) {
+                if (b.tile(col, row) != null) {
+                    if (b.tile(col, row).value() == MAX_PIECE) {
+                        exist = true;
+                    }
+                }
+            }
+        }
+        return exist;
     }
 
     /**
