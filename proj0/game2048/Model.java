@@ -109,11 +109,48 @@ public class Model extends Observable {
     public boolean tilt(Side side) {
         boolean changed;
         changed = false;
-
-        // TODO: Modify this.board (and perhaps this.score) to account
-        // for the tilt to the Side SIDE. If the board changed, set the
-        // changed local variable to true.
-
+        this.board.setViewingPerspective(side);
+        int size = this.board.size();
+        for (int col = 0; col < size; col++) {
+            int tileCount = 0;
+            Tile t1 = null, t2 = null;
+            for (int row = size - 1; row >= 0; row--) {
+                if (this.board.tile(col, row) != null) {
+                    Tile t = this.board.tile(col, row);
+                    if (t1 == null) {
+                        t1 = t;
+                    } else if (t2 == null) {
+                        t2 = t;
+                    }
+                    if (t1 != null && t2 != null) {
+                        if (t1.value() == t2.value()) {
+                            this.board.move(col, size - 1 - tileCount, t1);
+                            this.board.move(col, size - 1 - tileCount, t2);
+                            changed = true;
+                            this.score += t1.value() + t2.value();
+                            t1 = t2 = null;
+                        } else {
+                            this.board.move(col, size - 1 - tileCount, t1);
+                            if (t1.next() != t1) {
+                                changed = true;
+                            }
+                            t1 = t2;
+                            t2 = null;
+                        }
+                        tileCount++;
+                    }
+                }
+            }
+            if (t1 != null) {
+                this.board.move(col, size - 1 - tileCount, t1);
+                if (t1.next() != t1) {
+                    changed = true;
+                }
+                tileCount++;
+                t1 = null;
+            }
+        }
+        this.board.setViewingPerspective(Side.NORTH);
         checkGameOver();
         if (changed) {
             setChanged();
