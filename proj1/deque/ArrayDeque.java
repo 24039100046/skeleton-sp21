@@ -23,7 +23,7 @@ public class ArrayDeque<T> {
         }
 
         public T removeLast() {
-            if (array.length / size >= 4 && array.length >= 16) {
+            if (size >= 4 && array.length / size >= 4) {
                 resize(array.length / 2);
             }
             T item = array[size - 1];
@@ -86,10 +86,10 @@ public class ArrayDeque<T> {
 
     /**
      * index                          return
-     * 0                              prev[prev.size() - 1]
-     * prev.size() - 1                prev[0]
-     * prev.size()                    next[0]
-     * prev.size() + next.size() - 1  next[next.size() - 1]
+     * 0                              prev.get(prev.size() - 1)
+     * prev.size() - 1                prev.get(0)
+     * prev.size()                    next.get(0)
+     * prev.size() + next.size() - 1  next.get(next.size() - 1)
      */
     public T get(int index) {
         if (index < prev.size()) {

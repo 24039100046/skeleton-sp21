@@ -111,10 +111,10 @@ public class LinkedListDeque<T> {
         }
     }
 
-//    实现了iterator应该容易一点
-//    public boolean equals(Object o) {
-//        if (!(o instanceof LinkedListDeque)) {
-//            return false;
-//        }
-//    }
+    //实现了iterator应该容易一点
+    //public boolean equals(Object o) {
+    //    if (!(o instanceof LinkedListDeque)) {
+    //        return false;
+    //    }
+    //}
 }
