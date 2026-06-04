@@ -59,26 +59,38 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
-        if (size() >= 4 && array.length / size() >= 4) {
-            resize(array.length / 2);
+        if (size() > 0) {
+            if (size() >= 4 && array.length / size() >= 4) {
+                resize(array.length / 2);
+            }
+            T item = array[validateIndex(prev + 1)];
+            array[validateIndex(prev + 1)] = null;
+            prev++;
+            return item;
+        } else {
+            return null;
         }
-        T item = array[validateIndex(prev + 1)];
-        array[validateIndex(prev + 1)] = null;
-        prev++;
-        return item;
     }
 
     public T removeLast() {
-        if (size() >= 4 && array.length / size() >= 4) {
-            resize(array.length / 2);
+        if (size() > 0) {
+            if (size() >= 4 && array.length / size() >= 4) {
+                resize(array.length / 2);
+            }
+            T item = array[validateIndex(next - 1)];
+            array[validateIndex(next - 1)] = null;
+            next--;
+            return item;
+        } else {
+            return null;
         }
-        T item = array[validateIndex(next - 1)];
-        array[validateIndex(next - 1)] = null;
-        next--;
-        return item;
     }
 
     public T get(int index) {
-        return array[validateIndex(prev + 1 + index)];
+        if (index >= 0 && index < size()) {
+            return array[validateIndex(prev + 1 + index)];
+        } else {
+            return null;
+        }
     }
 }
