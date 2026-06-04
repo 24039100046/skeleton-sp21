@@ -1,61 +1,46 @@
 package deque;
 
 public class ArrayDeque<T> {
-    private static class ArrayList<T> {
-        T[] array;
-        int size;
-
-        public ArrayList() {
-            array = (T[]) new Object[4];
-            size = 0;
-        }
-
-        public void addLast(T item) {
-            if (size == array.length) {
-                resize(array.length * 2);
-            }
-            array[size] = item;
-            size++;
-        }
-
-        public int size() {
-            return size;
-        }
-
-        public T removeLast() {
-            if (size >= 4 && array.length / size >= 4) {
-                resize(array.length / 2);
-            }
-            T item = array[size - 1];
-            array[size - 1] = null;
-            size--;
-            return item;
-        }
-
-        public T get(int index) {
-            return array[index];
-        }
-
-        private void resize(int capacity) {
-            T[] newArray = (T[]) new Object[capacity];
-            System.arraycopy(array, 0, newArray, 0, size);
-        }
-    }
-
-    ArrayList<T> prev;
-    ArrayList<T> next;
+    private T[] array;
+    private int prev;
+    private int next;
 
     public ArrayDeque() {
-        prev = new ArrayList<>();
-        next = new ArrayList<>();
+        array = (T[]) new Object[8];
+        prev = -1;
+        next = 0;
+    }
+
+    private int mod(int a, int b) {
+        return ((a % b) + b) % b;
+    }
+
+    private int validateIndex(int n) {
+        return mod(n, array.length);
+    }
+
+    private void resize(int capacity) {
+        T[] newArray = (T[]) new Object[capacity];
+        for (int i = prev + 1; i <= next - 1; i++) {
+            newArray[mod(i, capacity)] = array[validateIndex(i)];
+        }
+        array = newArray;
     }
 
     public void addFirst(T item) {
-        prev.addLast(item);
+        if (size() == array.length) {
+            resize(array.length * 2);
+        }
+        array[validateIndex(prev)] = item;
+        prev--;
     }
 
     public void addLast(T item) {
-        next.addLast(item);
+        if (size() == array.length) {
+            resize(array.length * 2);
+        }
+        array[validateIndex(next)] = item;
+        next++;
     }
 
     public boolean isEmpty() {
@@ -63,39 +48,37 @@ public class ArrayDeque<T> {
     }
 
     public int size() {
-        return prev.size() + next.size();
+        return next - prev - 1;
     }
 
     public void printDeque() {
-        for (int i = prev.size() - 1; i > 0; i--) {
-            System.out.print(prev.get(i) + " ");
-        }
-        for (int i = 0; i < next.size(); i++) {
-            System.out.print(next.get(i) + " ");
+        for (int i = prev + 1; i <= next - 1; i++) {
+            System.out.print(array[validateIndex(i)] + " ");
         }
         System.out.println();
     }
 
     public T removeFirst() {
-        return prev.removeLast();
+        if (size() >= 4 && array.length / size() >= 4) {
+            resize(array.length / 2);
+        }
+        T item = array[validateIndex(prev + 1)];
+        array[validateIndex(prev + 1)] = null;
+        prev++;
+        return item;
     }
 
     public T removeLast() {
-        return next.removeLast();
+        if (size() >= 4 && array.length / size() >= 4) {
+            resize(array.length / 2);
+        }
+        T item = array[validateIndex(next - 1)];
+        array[validateIndex(next - 1)] = null;
+        next--;
+        return item;
     }
 
-    /**
-     * index                          return
-     * 0                              prev.get(prev.size() - 1)
-     * prev.size() - 1                prev.get(0)
-     * prev.size()                    next.get(0)
-     * prev.size() + next.size() - 1  next.get(next.size() - 1)
-     */
     public T get(int index) {
-        if (index < prev.size()) {
-            return prev.get(prev.size() - 1 - index);
-        } else {
-            return next.get(index - prev.size());
-        }
+        return array[validateIndex(prev + 1 + index)];
     }
 }
