@@ -2,16 +2,16 @@ package deque;
 
 public class ArrayDeque<T> {
     private T[] array;
-    private int prev;
-    private int next;
+    private int nextFront;
+    private int nextBack;
 
     public ArrayDeque() {
         array = (T[]) new Object[8];
-        prev = -1;
-        next = 0;
+        nextFront = 4;
+        nextBack = 5;
     }
 
-    private int mod(int a, int b) {
+    private static int mod(int a, int b) {
         return ((a % b) + b) % b;
     }
 
@@ -21,7 +21,7 @@ public class ArrayDeque<T> {
 
     private void resize(int capacity) {
         T[] newArray = (T[]) new Object[capacity];
-        for (int i = prev + 1; i <= next - 1; i++) {
+        for (int i = nextFront + 1; i <= nextBack - 1; i++) {
             newArray[mod(i, capacity)] = array[validateIndex(i)];
         }
         array = newArray;
@@ -31,16 +31,16 @@ public class ArrayDeque<T> {
         if (size() == array.length) {
             resize(array.length * 2);
         }
-        array[validateIndex(prev)] = item;
-        prev--;
+        array[validateIndex(nextFront)] = item;
+        nextFront--;
     }
 
     public void addLast(T item) {
         if (size() == array.length) {
             resize(array.length * 2);
         }
-        array[validateIndex(next)] = item;
-        next++;
+        array[validateIndex(nextBack)] = item;
+        nextBack++;
     }
 
     public boolean isEmpty() {
@@ -48,47 +48,48 @@ public class ArrayDeque<T> {
     }
 
     public int size() {
-        return next - prev - 1;
+        return nextBack - nextFront - 1;
     }
 
     public void printDeque() {
-        for (int i = prev + 1; i <= next - 1; i++) {
+        for (int i = nextFront + 1; i <= nextBack - 1; i++) {
             System.out.print(array[validateIndex(i)] + " ");
         }
         System.out.println();
     }
 
     public T removeFirst() {
-        if (size() > 0) {
-            if (size() >= 4 && array.length / size() >= 4) {
-                resize(array.length / 2);
-            }
-            T item = array[validateIndex(prev + 1)];
-            array[validateIndex(prev + 1)] = null;
-            prev++;
-            return item;
-        } else {
+        if (isEmpty()) {
             return null;
         }
+        if (size() >= 4 && array.length / size() >= 4) {
+            resize(array.length / 2);
+        }
+        T item = array[validateIndex(nextFront + 1)];
+        array[validateIndex(nextFront + 1)] = null;
+        nextFront++;
+        return item;
     }
 
     public T removeLast() {
-        if (size() > 0) {
-            if (size() >= 4 && array.length / size() >= 4) {
-                resize(array.length / 2);
-            }
-            T item = array[validateIndex(next - 1)];
-            array[validateIndex(next - 1)] = null;
-            next--;
-            return item;
-        } else {
+        if (isEmpty()) {
             return null;
         }
+        if (size() >= 4 && array.length / size() >= 4) {
+            resize(array.length / 2);
+        }
+        T item = array[validateIndex(nextBack - 1)];
+        array[validateIndex(nextBack - 1)] = null;
+        nextBack--;
+        return item;
     }
 
     public T get(int index) {
+        if (isEmpty()) {
+            return null;
+        }
         if (index >= 0 && index < size()) {
-            return array[validateIndex(prev + 1 + index)];
+            return array[validateIndex(nextFront + 1 + index)];
         } else {
             return null;
         }
