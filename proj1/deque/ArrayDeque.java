@@ -104,7 +104,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private class ArrayDequeIterator implements Iterator<T> {
         private int iterIndex;
 
-        public ArrayDequeIterator() {
+        ArrayDequeIterator() {
             iterIndex = 0;
         }
 
