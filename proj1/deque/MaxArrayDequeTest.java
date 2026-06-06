@@ -8,21 +8,21 @@ import java.util.Comparator;
 
 
 public class MaxArrayDequeTest {
-    private class MaxIntComparator implements Comparator<Integer> {
+    private static class MaxIntComparator implements Comparator<Integer> {
         @Override
         public int compare(Integer a, Integer b) {
             return a - b;
         }
     }
 
-    private class MinIntComparator implements Comparator<Integer> {
+    private static class MinIntComparator implements Comparator<Integer> {
         @Override
         public int compare(Integer a, Integer b) {
             return b - a;
         }
     }
 
-    private class StringComparator implements Comparator<String> {
+    private static class StringComparator implements Comparator<String> {
         @Override
         public int compare(String a, String b) {
             return a.compareTo(b);

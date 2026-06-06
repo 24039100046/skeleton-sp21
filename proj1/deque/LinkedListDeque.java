@@ -1,6 +1,9 @@
 package deque;
 
-public class LinkedListDeque<T> implements Deque<T> {
+import java.util.Iterator;
+import java.util.Objects;
+
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     private static class Node<T> {
         T item;
         Node<T> prev;
@@ -114,10 +117,50 @@ public class LinkedListDeque<T> implements Deque<T> {
         }
     }
 
-    //实现了iterator应该容易一点
-    //public boolean equals(Object o) {
-    //    if (!(o instanceof LinkedListDeque)) {
-    //        return false;
-    //    }
-    //}
+    private class LinkedListDequeIterator implements Iterator<T> {
+        private Node<T> p;
+
+        public LinkedListDequeIterator() {
+            p = sentinel.next;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return p != sentinel;
+        }
+
+        @Override
+        public T next() {
+            T item = p.item;
+            p = p.next;
+            return item;
+        }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedListDequeIterator();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof LinkedListDeque)) {
+            return false;
+        }
+        LinkedListDeque<T> d = (LinkedListDeque<T>) o;
+        Iterator<T> iter1 = this.iterator();
+        Iterator<T> iter2 = d.iterator();
+        while (iter1.hasNext() && iter2.hasNext()) {
+            if (!Objects.equals(iter1.next(), iter2.next())) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

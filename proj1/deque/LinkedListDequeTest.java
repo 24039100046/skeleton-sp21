@@ -11,15 +11,14 @@ import static org.junit.Assert.*;
 public class LinkedListDequeTest {
 
     @Test
-    /** Adds a few things to the list, checking isEmpty() and size() are correct,
-     * finally printing the results.
-     *
-     * && is the "and" operation. */
+    /* Adds a few things to the list, checking isEmpty() and size() are correct,
+      finally printing the results.
+      && is the "and" operation. */
     public void addIsEmptySizeTest() {
 
         //System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
-        LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
+        Deque<String> lld1 = new LinkedListDeque<>();
 
         assertTrue("A newly initialized LLDeque should be empty", lld1.isEmpty());
         lld1.addFirst("front");
@@ -41,12 +40,12 @@ public class LinkedListDequeTest {
     }
 
     @Test
-    /** Adds an item, then removes an item, and ensures that dll is empty afterwards. */
+    /* Adds an item, then removes an item, and ensures that dll is empty afterwards. */
     public void addRemoveTest() {
 
         //System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
-        LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+        Deque<Integer> lld1 = new LinkedListDeque<>();
         // should be empty
         assertTrue("lld1 should be empty upon initialization", lld1.isEmpty());
 
@@ -66,7 +65,7 @@ public class LinkedListDequeTest {
 
         //System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
-        LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
+        Deque<Integer> lld1 = new LinkedListDeque<>();
         lld1.addFirst(3);
 
         lld1.removeLast();
@@ -88,9 +87,9 @@ public class LinkedListDequeTest {
     public void multipleParamTest() {
 
 
-        LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
-        LinkedListDeque<Double> lld2 = new LinkedListDeque<Double>();
-        LinkedListDeque<Boolean> lld3 = new LinkedListDeque<Boolean>();
+        Deque<String> lld1 = new LinkedListDeque<>();
+        Deque<Double> lld2 = new LinkedListDeque<>();
+        Deque<Boolean> lld3 = new LinkedListDeque<>();
 
         lld1.addFirst("string");
         lld2.addFirst(3.14159);
@@ -108,12 +107,12 @@ public class LinkedListDequeTest {
 
         //System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
-        LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+        Deque<Integer> lld1 = new LinkedListDeque<>();
 
         boolean passed1 = false;
         boolean passed2 = false;
-        assertEquals("Should return null when removeFirst is called on an empty Deque,", null, lld1.removeFirst());
-        assertEquals("Should return null when removeLast is called on an empty Deque,", null, lld1.removeLast());
+        assertNull("Should return null when removeFirst is called on an empty Deque,", lld1.removeFirst());
+        assertNull("Should return null when removeLast is called on an empty Deque,", lld1.removeLast());
 
 
     }
@@ -124,7 +123,7 @@ public class LinkedListDequeTest {
 
         //System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
-        LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+        Deque<Integer> lld1 = new LinkedListDeque<>();
         for (int i = 0; i < 1000000; i++) {
             lld1.addLast(i);
         }
@@ -138,5 +137,37 @@ public class LinkedListDequeTest {
         }
 
 
+    }
+
+    @Test
+    /* Checks for each loop. */
+    public void iterableTest() {
+        LinkedListDeque<Integer> d1 = new LinkedListDeque<>();
+        LinkedListDeque<Integer> d2 = new LinkedListDeque<>();
+        d1.addFirst(4);
+        d1.addLast(8);
+        d1.addFirst(4);
+        d1.addLast(8);
+        for (int n : d1) {
+            d2.addLast(n);
+        }
+        for (int i = 0; i < d1.size(); i++) {
+            assertEquals(d1.get(i), d2.get(i));
+        }
+    }
+
+    @Test
+    /* Checks equals method. */
+    public void equalsTest() {
+        LinkedListDeque<Integer> d1 = new LinkedListDeque<>();
+        LinkedListDeque<Integer> d2 = new LinkedListDeque<>();
+        d1.addFirst(4);
+        d1.addLast(8);
+        d1.addFirst(4);
+        d1.addLast(8);
+        for (int n : d1) {
+            d2.addLast(n);
+        }
+        assertEquals(d1, d2);
     }
 }

@@ -2,6 +2,8 @@ package deque;
 
 import org.junit.Test;
 
+import java.util.Objects;
+
 import static org.junit.Assert.*;
 
 
@@ -11,15 +13,15 @@ import static org.junit.Assert.*;
 public class ArrayDequeTest {
 
     @Test
-    /** Adds a few things to the list, checking isEmpty() and size() are correct,
-     * finally printing the results.
-     *
-     * && is the "and" operation. */
+    /* Adds a few things to the list, checking isEmpty() and size() are correct,
+      finally printing the results.
+
+      && is the "and" operation. */
     public void addIsEmptySizeTest() {
 
         //System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
-        ArrayDeque<String> lld1 = new ArrayDeque<String>();
+        Deque<String> lld1 = new ArrayDeque<>();
 
         assertTrue("A newly initialized LLDeque should be empty", lld1.isEmpty());
         lld1.addFirst("front");
@@ -41,12 +43,12 @@ public class ArrayDequeTest {
     }
 
     @Test
-    /** Adds an item, then removes an item, and ensures that dll is empty afterwards. */
+    /* Adds an item, then removes an item, and ensures that dll is empty afterwards. */
     public void addRemoveTest() {
 
         //System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
-        ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+        Deque<Integer> lld1 = new ArrayDeque<>();
         // should be empty
         assertTrue("lld1 should be empty upon initialization", lld1.isEmpty());
 
@@ -88,9 +90,9 @@ public class ArrayDequeTest {
     public void multipleParamTest() {
 
 
-        ArrayDeque<String> lld1 = new ArrayDeque<String>();
-        ArrayDeque<Double> lld2 = new ArrayDeque<Double>();
-        ArrayDeque<Boolean> lld3 = new ArrayDeque<Boolean>();
+        Deque<String> lld1 = new ArrayDeque<>();
+        Deque<Double> lld2 = new ArrayDeque<>();
+        Deque<Boolean> lld3 = new ArrayDeque<>();
 
         lld1.addFirst("string");
         lld2.addFirst(3.14159);
@@ -108,12 +110,12 @@ public class ArrayDequeTest {
 
         //System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
-        ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+        Deque<Integer> lld1 = new ArrayDeque<>();
 
         boolean passed1 = false;
         boolean passed2 = false;
-        assertEquals("Should return null when removeFirst is called on an empty Deque,", null, lld1.removeFirst());
-        assertEquals("Should return null when removeLast is called on an empty Deque,", null, lld1.removeLast());
+        assertNull("Should return null when removeFirst is called on an empty Deque,", lld1.removeFirst());
+        assertNull("Should return null when removeLast is called on an empty Deque,", lld1.removeLast());
 
 
     }
@@ -124,7 +126,7 @@ public class ArrayDequeTest {
 
         //System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
-        ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+        Deque<Integer> lld1 = new ArrayDeque<>();
         for (int i = 0; i < 1000000; i++) {
             lld1.addLast(i);
         }
@@ -138,5 +140,37 @@ public class ArrayDequeTest {
         }
 
 
+    }
+
+    @Test
+    /* Checks for each loop. */
+    public void iterableTest() {
+        ArrayDeque<Integer> d1 = new ArrayDeque<>();
+        ArrayDeque<Integer> d2 = new ArrayDeque<>();
+        d1.addFirst(4);
+        d1.addLast(8);
+        d1.addFirst(4);
+        d1.addLast(8);
+        for (int n : d1) {
+            d2.addLast(n);
+        }
+        for (int i = 0; i < d1.size(); i++) {
+            assertEquals(d1.get(i), d2.get(i));
+        }
+    }
+
+    @Test
+    /* Checks equals method. */
+    public void equalsTest() {
+        ArrayDeque<Integer> d1 = new ArrayDeque<>();
+        ArrayDeque<Integer> d2 = new ArrayDeque<>();
+        d1.addFirst(4);
+        d1.addLast(8);
+        d1.addFirst(4);
+        d1.addLast(8);
+        for (int n : d1) {
+            d2.addLast(n);
+        }
+        assertEquals(d1, d2);
     }
 }

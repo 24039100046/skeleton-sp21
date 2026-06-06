@@ -49,7 +49,7 @@ public class TestBuggyAList {
                 }
                 case 2 -> {
                     // getLast
-                    if (L1.size() > 0 && L2.size() > 0) {
+                    if (!L1.isEmpty() && !L2.isEmpty()) {
                         int last1 = L1.get(L1.size() - 1);
                         int last2 = L2.get(L2.size() - 1);
                         System.out.println("getLast()");
@@ -58,7 +58,7 @@ public class TestBuggyAList {
                 }
                 case 3 -> {
                     // removeLast
-                    if (L1.size() > 0 && L2.size() > 0) {
+                    if (!L1.isEmpty() && !L2.isEmpty()) {
                         int last1 = L1.removeLast();
                         int last2 = L2.removeLast();
                         System.out.println("removeLast()");
