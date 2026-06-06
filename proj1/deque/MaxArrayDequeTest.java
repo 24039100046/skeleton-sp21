@@ -30,7 +30,7 @@ public class MaxArrayDequeTest {
     }
 
     @Test
-    public void IntComparatorTest() {
+    public void intComparatorTest() {
         MaxArrayDeque<Integer> m = new MaxArrayDeque<>(new MaxIntComparator());
         m.addLast(4);
         m.addLast(8);
@@ -40,7 +40,7 @@ public class MaxArrayDequeTest {
     }
 
     @Test
-    public void StringComparatorTest() {
+    public void stringComparatorTest() {
         MaxArrayDeque<String> m = new MaxArrayDeque<>(new StringComparator());
         m.addLast("I");
         m.addLast("love");
