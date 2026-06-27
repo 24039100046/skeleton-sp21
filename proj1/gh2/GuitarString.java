@@ -7,7 +7,7 @@ import deque.ArrayDeque;
 //  maybe more imports
 
 //Note: This file will not compile until you complete the Deque implementations
-public class GuitarString {
+public class GuitarString implements MusicString {
     /**
      * Constants. Do not change. In case you're curious, the keyword final
      * means the values cannot be changed at runtime. We'll discuss this and
@@ -33,7 +33,7 @@ public class GuitarString {
         }
     }
 
-
+    @Override
     /* Pluck the guitar string by replacing the buffer with white noise. */
     public void pluck() {
         //       Dequeue everything in buffer, and replace with random numbers
@@ -50,6 +50,7 @@ public class GuitarString {
         }
     }
 
+    @Override
     /* Advance the simulation one time step by performing one iteration of
      * the Karplus-Strong algorithm.
      */
@@ -63,6 +64,7 @@ public class GuitarString {
         buffer.addLast(last);
     }
 
+    @Override
     /* Return the double at the front of the buffer. */
     public double sample() {
         //       Return the correct thing.

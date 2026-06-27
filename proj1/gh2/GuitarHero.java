@@ -7,11 +7,13 @@ public class GuitarHero {
     public static String keyboard = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";
 
     public static void main(String[] args) {
-        GuitarString string[] = new GuitarString[37];
+        MusicString[] string = new GuitarString[37];
+//        MusicString[] string = new _String[37];
         Double[] concert = new Double[37];
         for (int i = 0; i < 37; i++) {
             concert[i] = 440 * Math.pow(2, (double) (i - 24) / 12);
             string[i] = new GuitarString(concert[i]);
+//            string[i] = new _String(concert[i]);
         }
         while (true) {
             if (StdDraw.hasNextKeyTyped()) {
@@ -21,12 +23,12 @@ public class GuitarHero {
                     string[index].pluck();
                 }
             }
-            double sample = (double) 0;
-            for (GuitarString s : string) {
+            double sample = 0;
+            for (MusicString s : string) {
                 sample += s.sample();
             }
             StdAudio.play(sample);
-            for (GuitarString s : string) {
+            for (MusicString s : string) {
                 s.tic();
             }
         }
